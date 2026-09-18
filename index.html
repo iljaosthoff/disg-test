@@ -115,23 +115,34 @@ a:hover{text-decoration-color:currentColor}
 .track .fill{height:100%; background:var(--accent); border-radius:99px; transition:width .28s ease}
 .qhead{margin:0 0 4px}
 .qsub{color:var(--text-secondary); font-size:.95rem; margin:10px 0 22px}
+.blockctx{font-size:.8rem; font-weight:620; letter-spacing:.09em; text-transform:uppercase; color:var(--text-muted); margin-bottom:10px}
 .stmts{display:flex; flex-direction:column; gap:10px}
 .stmt{
-  display:flex; align-items:center; gap:14px; justify-content:space-between; flex-wrap:wrap;
-  border:1px solid var(--border); border-radius:12px; padding:14px 15px; background:var(--surface-1); transition:border-color .12s, background .12s;
+  display:flex; align-items:center; gap:14px; justify-content:space-between; width:100%;
+  font:inherit; color:inherit; text-align:left; cursor:pointer;
+  border:1px solid var(--border-strong); border-radius:12px; padding:17px 18px; background:var(--surface-1);
+  transition:border-color .12s, background .12s, transform .06s;
 }
-.stmt .txt{flex:1 1 230px; font-size:1rem; line-height:1.45}
-.picks{display:flex; gap:7px; flex:none}
-.pick{
-  font:inherit; font-size:.82rem; font-weight:600; cursor:pointer; white-space:nowrap;
-  border:1px solid var(--border-strong); background:var(--surface-1); color:var(--text-secondary);
-  border-radius:8px; padding:7px 12px; transition:all .12s;
+.stmt:hover{border-color:var(--text-muted); background:var(--surface-2)}
+.stmt:active{transform:translateY(1px)}
+.stmt .txt{flex:1 1 auto; font-size:1rem; line-height:1.45}
+.stmt .tag{
+  flex:none; font-size:.72rem; font-weight:650; letter-spacing:.05em; text-transform:uppercase;
+  color:var(--text-muted); border:1px solid var(--border); border-radius:99px; padding:4px 10px; white-space:nowrap;
 }
-.pick:hover{color:var(--text-primary); border-color:var(--text-muted)}
-.pick[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
-.stmt.is-most{border-color:var(--text-muted); background:var(--surface-2)}
-.stmt.is-least{opacity:.62}
-.navrow{display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:26px}
+.stmt.is-picked{border-color:var(--accent); background:var(--surface-2)}
+.stmt.is-locked{opacity:.45; cursor:default; border-color:var(--border)}
+.stmt.is-locked:hover{border-color:var(--border); background:var(--surface-1); }
+.stmt.is-locked:active{transform:none}
+.navrow{display:flex; justify-content:flex-start; align-items:center; gap:12px; margin-top:26px}
+
+/* ---------- So läuft's (Intro) ---------- */
+.howto{display:flex; flex-direction:column; gap:12px; margin:26px 0 30px; max-width:58ch}
+.howto-step{display:flex; align-items:flex-start; gap:12px; font-size:.95rem; line-height:1.5; color:var(--text-secondary)}
+.howto-step .n{
+  flex:none; width:23px; height:23px; border-radius:50%; display:grid; place-items:center; margin-top:1px;
+  background:var(--accent); color:var(--accent-ink); font-size:.78rem; font-weight:700;
+}
 
 /* ---------- Result ---------- */
 .headline{display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap}
@@ -155,6 +166,8 @@ a:hover{text-decoration-color:currentColor}
 .tbl td:not(:first-child), .tbl th:not(:first-child){text-align:right; font-variant-numeric:tabular-nums}
 details.tblwrap{margin-top:16px}
 details.tblwrap summary{cursor:pointer; font-size:.88rem; color:var(--text-secondary); padding:6px 0}
+.tblscroll{overflow-x:auto; -webkit-overflow-scrolling:touch}
+@media (max-width:520px){ .tbl th,.tbl td{padding:8px 7px; font-size:.86rem; white-space:nowrap} }
 .section{margin-top:26px}
 .section h3{margin-bottom:9px}
 ul.clean{margin:0 0 0 0; padding-left:1.15em}
@@ -207,6 +220,14 @@ footer a{color:var(--text-muted)}
       <span class="fact">Nichts wird gespeichert</span>
       <span class="fact">Ergebnis sofort</span>
     </div>
+
+    <h3 style="margin-bottom:2px">So läuft der Test ab</h3>
+    <div class="howto">
+      <div class="howto-step"><span class="n">1</span><div>Du siehst vier Aussagen und klickst die an, die <strong>am meisten</strong> auf dich zutrifft.</div></div>
+      <div class="howto-step"><span class="n">2</span><div>Danach siehst du dieselben vier noch einmal und klickst die an, die <strong>am wenigsten</strong> passt.</div></div>
+      <div class="howto-step"><span class="n">3</span><div>Das Ganze sieben Mal. <strong>Ein Klick pro Schritt</strong> — es geht von selbst weiter, du musst nichts bestätigen.</div></div>
+    </div>
+
     <button class="btn" id="startBtn">Test starten</button>
   </div>
 
@@ -233,15 +254,15 @@ footer a{color:var(--text-muted)}
 <!-- ============ QUIZ ============ -->
 <section class="screen" id="screen-quiz" hidden>
   <div class="progress">
-    <div class="meta"><span id="progLabel">Block 1 von 7</span><span id="progPct">0 %</span></div>
+    <div class="meta"><span id="progLabel">Schritt 1 von 14</span><span id="progPct">0 %</span></div>
     <div class="track"><div class="fill" id="progFill" style="width:0%"></div></div>
   </div>
+  <div class="blockctx" id="blockCtx">—</div>
   <h2 class="qhead" id="qTitle">—</h2>
-  <p class="qsub">Wähle die Aussage, die <strong>am meisten</strong> auf dich zutrifft — und die, die <strong>am wenigsten</strong> passt. Antworte spontan, so wie du wirklich bist, nicht wie du gern wärst.</p>
-  <div class="stmts" id="stmts"></div>
+  <p class="qsub" id="qSub">—</p>
+  <div class="stmts" id="stmts" role="group" aria-live="polite"></div>
   <div class="navrow">
     <button class="btn btn-ghost btn-sm" id="backBtn">Zurück</button>
-    <button class="btn" id="nextBtn" disabled>Weiter</button>
   </div>
 </section>
 
@@ -264,10 +285,12 @@ footer a{color:var(--text-muted)}
 
     <details class="tblwrap">
       <summary>Werte als Tabelle anzeigen</summary>
-      <table class="tbl" id="resTable">
-        <thead><tr><th>Stil</th><th>Ausprägung</th><th>„am meisten“</th><th>„am wenigsten“</th></tr></thead>
-        <tbody></tbody>
-      </table>
+      <div class="tblscroll">
+        <table class="tbl" id="resTable">
+          <thead><tr><th>Stil</th><th>Ausprägung</th><th>„am meisten“</th><th>„am wenigsten“</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </details>
 
     <div class="actions">
@@ -300,6 +323,7 @@ footer a{color:var(--text-muted)}
       <li><strong>Er misst dein Selbstbild.</strong> Du antwortest über dich selbst. Wie andere dich erleben, kann abweichen — oft ist genau diese Differenz das Interessante.</li>
       <li><strong>Er vergleicht dich mit dir selbst, nicht mit anderen.</strong> Weil du bei jedem Block wählen musst, was am meisten und am wenigsten passt, zeigen die Werte deine innere Rangfolge — keinen Vergleich mit der Bevölkerung.</li>
       <li><strong>Er ist kein psychologisches Diagnoseinstrument.</strong> DISG ist wissenschaftlich deutlich schwächer belegt als etwa die Big Five. Für Selbstreflexion und Kommunikation ist es brauchbar; für Personalauswahl, Diagnose oder weitreichende Entscheidungen über Menschen ist es ungeeignet.</li>
+      <li><strong>Er ist kurz.</strong> 28 Aussagen reichen für die Rangfolge deiner vier Stile und für einen klaren Hauptstil, wenn der Abstand deutlich ist. Für feine Abstufungen reichen sie nicht: Unterschiede von einem Punkt sind Rauschen. Kommerzielle DISG-Verfahren arbeiten mit 100 und mehr Aussagen und kaufen sich damit Präzision, die für Selbstreflexion selten nötig ist.</li>
       <li><strong>Kein Stil ist besser.</strong> Es gibt keine guten und schlechten Ergebnisse, nur unterschiedliche Muster mit je eigenen Stärken und Kosten.</li>
     </ul>
   </div>
@@ -309,8 +333,7 @@ footer a{color:var(--text-muted)}
   <p><strong>Hinweis:</strong> Dieser Test dient der Selbstreflexion und ersetzt keine psychologische, medizinische oder therapeutische Beratung.</p>
   <p><strong>Datenschutz:</strong> Der Test läuft vollständig in deinem Browser. Es werden keine Antworten übertragen, keine Cookies gesetzt und keine Daten gespeichert oder ausgewertet.</p>
   <p>Modellgrundlage: DISG / DISC nach William Moulton Marston (1928). Fragen und Auswertungstexte dieser Seite sind eine eigenständige Umsetzung und keine Lizenzprodukte.</p>
-  <p><!-- TODO ILJA: Impressum-Link auf deine bestehende Seite setzen (bei öffentlichen Webseiten in DE nach § 5 DDG Pflicht) -->
-  <a href="#" id="imprintLink">Impressum</a></p>
+  <p><a href="https://www.ilja-osthoff.ch/impressum/" target="_blank" rel="noopener">Impressum</a></p>
 </footer>
 
 </div>
@@ -412,7 +435,10 @@ const BLOCKS = [
 const ORDER = ["D","I","S","G"];
 
 /* ---------------- State ---------------- */
-let idx = 0;
+let idx = 0;          // welcher Block
+let step = 0;         // 0 = "am meisten", 1 = "am wenigsten"
+let busy = false;     // sperrt Doppelklicks während der kurzen Bestätigung
+const STEPS = BLOCKS.length * 2;
 const answers = BLOCKS.map(() => ({most:null, least:null}));
 
 const $ = id => document.getElementById(id);
@@ -429,48 +455,76 @@ function toast(msg){
 }
 
 /* ---------------- Quiz ---------------- */
+/* Pro Bildschirm genau eine Entscheidung: erst "am meisten", dann "am wenigsten". */
 function renderBlock(){
   const b = BLOCKS[idx], a = answers[idx];
-  $("qTitle").textContent = b.title;
-  $("progLabel").textContent = "Block " + (idx+1) + " von " + BLOCKS.length;
-  const done = answers.filter(x => x.most !== null && x.least !== null).length;
-  const pct = Math.round(done / BLOCKS.length * 100);
-  $("progPct").textContent = pct + " %";
-  $("progFill").style.width = pct + "%";
-  $("backBtn").style.visibility = idx === 0 ? "hidden" : "visible";
-  $("nextBtn").textContent = idx === BLOCKS.length - 1 ? "Auswertung anzeigen" : "Weiter";
+  const done = idx * 2 + step;
+
+  $("progLabel").textContent = "Schritt " + (done + 1) + " von " + STEPS;
+  $("progPct").textContent = Math.round(done / STEPS * 100) + " %";
+  $("progFill").style.width = Math.round(done / STEPS * 100) + "%";
+  $("blockCtx").textContent = "Runde " + (idx + 1) + " von " + BLOCKS.length + " · " + b.title;
+
+  if (step === 0){
+    $("qTitle").textContent = "Was trifft am meisten auf dich zu?";
+    $("qSub").innerHTML = "Klick <strong>eine</strong> der vier Aussagen an. Antworte spontan, so wie du wirklich bist — nicht wie du gern wärst.";
+  } else {
+    $("qTitle").textContent = "Und was trifft am wenigsten zu?";
+    $("qSub").innerHTML = "Jetzt das Gegenteil: Klick von den übrigen drei die Aussage an, die <strong>am wenigsten</strong> zu dir passt.";
+  }
+
+  $("backBtn").style.visibility = (idx === 0 && step === 0) ? "hidden" : "visible";
 
   const host = $("stmts"); host.innerHTML = "";
   b.items.forEach((it, i) => {
-    const row = document.createElement("div");
-    row.className = "stmt" + (a.most === i ? " is-most" : "") + (a.least === i ? " is-least" : "");
-    const txt = document.createElement("div");
+    const locked = (step === 1 && a.most === i);
+    const picked = (step === 0 ? a.most : a.least) === i;
+
+    const row = document.createElement("button");
+    row.type = "button";
+    row.className = "stmt" + (picked ? " is-picked" : "") + (locked ? " is-locked" : "");
+    if (locked) row.disabled = true;
+
+    const txt = document.createElement("span");
     txt.className = "txt"; txt.textContent = it.s;
-    const picks = document.createElement("div");
-    picks.className = "picks";
-    [["most","Am meisten"],["least","Am wenigsten"]].forEach(([kind,label]) => {
-      const btn = document.createElement("button");
-      btn.className = "pick"; btn.type = "button"; btn.textContent = label;
-      btn.setAttribute("aria-pressed", a[kind] === i ? "true" : "false");
-      btn.setAttribute("aria-label", label + ": " + it.s);
-      btn.addEventListener("click", () => {
-        const other = kind === "most" ? "least" : "most";
-        a[kind] = (a[kind] === i) ? null : i;
-        if (a[kind] !== null && a[other] === i) a[other] = null;
-        renderBlock();
-      });
-      picks.appendChild(btn);
-    });
-    row.appendChild(txt); row.appendChild(picks); host.appendChild(row);
+    row.appendChild(txt);
+
+    if (locked){
+      const tag = document.createElement("span");
+      tag.className = "tag"; tag.textContent = "✓ am meisten";
+      row.appendChild(tag);
+    }
+
+    row.addEventListener("click", () => choose(i));
+    host.appendChild(row);
   });
-  $("nextBtn").disabled = !(a.most !== null && a.least !== null);
+}
+
+function choose(i){
+  if (busy) return;
+  const a = answers[idx];
+  if (step === 0){
+    a.most = i;
+    if (a.least === i) a.least = null;
+  } else {
+    a.least = i;
+  }
+  // kurz sichtbar bestaetigen, dann weiter
+  busy = true;
+  renderBlock();
+  setTimeout(() => {
+    busy = false;
+    if (step === 0){ step = 1; renderBlock(); return; }
+    if (idx < BLOCKS.length - 1){ idx++; step = 0; renderBlock(); return; }
+    const sc = score(); writeHash(sc); showResult(sc);
+  }, 230);
 }
 
 $("startBtn").addEventListener("click", () => { show("quiz"); renderBlock(); });
-$("backBtn").addEventListener("click", () => { if (idx > 0){ idx--; renderBlock(); } });
-$("nextBtn").addEventListener("click", () => {
-  if (idx < BLOCKS.length - 1){ idx++; renderBlock(); }
-  else { const sc = score(); writeHash(sc); showResult(sc); }
+$("backBtn").addEventListener("click", () => {
+  if (busy) return;
+  if (step === 1){ step = 0; renderBlock(); }
+  else if (idx > 0){ idx--; step = 1; renderBlock(); }
 });
 
 /* ---------------- Auswertung ---------------- */
@@ -543,8 +597,11 @@ function showResult(sc){
   // Mischtyp
   const key = primary + secondary, m = MIX[key];
   const secIdx = toIndex(raw[secondary]);
+  const gap = raw[primary] - raw[secondary];
   let mixHtml = '<h2>Deine Kombination: ' + primary + "/" + secondary + '</h2>';
-  if (secIdx <= 50){
+  if (gap <= 1){
+    mixHtml += '<div class="callout" style="margin-top:14px"><strong>Das ist knapp.</strong> ' + primary + ' und ' + secondary + ' liegen bei dir fast gleichauf. Bei 28 Aussagen ist ein Abstand von einem Punkt kein echter Unterschied — lies dein Ergebnis als Mischprofil aus beiden Stilen und nicht als klares „' + primary + '“. Wenn du wissen willst, welcher der beiden wirklich führt, hilft nur ein längerer Test oder die Einschätzung von Menschen, die dich gut kennen.</div>';
+  } else if (secIdx <= 50){
     mixHtml += '<p class="small" style="margin-top:12px; color:var(--text-secondary)">Dein Profil ist ungewöhnlich klar auf <strong>' + primary + ' — ' + TYPES[primary].name + '</strong> ausgerichtet; die anderen drei Stile liegen bei dir im neutralen bis niedrigen Bereich. Das bedeutet nicht, dass du sie nicht kannst — sondern dass sie dich weniger von selbst antreiben. Der zweitstärkste Stil ist ' + secondary + ' — ' + TYPES[secondary].name + '.</p>';
   }
   if (m){
@@ -571,7 +628,7 @@ function writeHash(sc){
   try { history.replaceState(null, "", h); } catch(e){}
 }
 function readHash(){
-  const m = location.hash.match(/^#r=(-?\d+),(-?\d+),(-?\d+),(-?\d+)$/);
+  const m = location.hash.match(/^#r=(-?\\d+),(-?\\d+),(-?\\d+),(-?\\d+)$/);
   if (!m) return null;
   const nums = m.slice(1,5).map(Number);
   if (nums.some(n => !isFinite(n) || n < -BLOCKS.length || n > BLOCKS.length)) return null;
@@ -585,9 +642,9 @@ $("copyBtn").addEventListener("click", () => {
   const cur = readHash() || score();
   const rank = ranked(cur.raw);
   const txt = "Mein DISG-Profil: " + rank[0] + " — " + TYPES[rank[0]].name +
-    " (Zweitstil: " + rank[1] + " — " + TYPES[rank[1]].name + ")\n\n" +
-    ORDER.map(t => t + " — " + TYPES[t].name + ": " + toIndex(cur.raw[t])).join("\n") +
-    "\n\n" + TYPES[rank[0]].tagline + "\n\nGetestet auf: " + location.origin + location.pathname;
+    " (Zweitstil: " + rank[1] + " — " + TYPES[rank[1]].name + ")\\n\\n" +
+    ORDER.map(t => t + " — " + TYPES[t].name + ": " + toIndex(cur.raw[t])).join("\\n") +
+    "\\n\\n" + TYPES[rank[0]].tagline + "\\n\\nGetestet auf: " + location.origin + location.pathname;
   navigator.clipboard.writeText(txt).then(() => toast("Ergebnis kopiert"), () => toast("Kopieren nicht möglich"));
 });
 
@@ -596,7 +653,7 @@ $("linkBtn").addEventListener("click", () => {
 });
 $("printBtn").addEventListener("click", () => window.print());
 $("againBtn").addEventListener("click", () => {
-  idx = 0;
+  idx = 0; step = 0; busy = false;
   answers.forEach(a => { a.most = null; a.least = null; });
   try { history.replaceState(null, "", location.pathname); } catch(e){}
   show("quiz"); renderBlock();
