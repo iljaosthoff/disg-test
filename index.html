@@ -113,9 +113,16 @@ a:hover{text-decoration-color:currentColor}
 .progress .meta{display:flex; justify-content:space-between; font-size:.85rem; color:var(--text-muted); margin-bottom:9px; font-variant-numeric:tabular-nums}
 .track{height:5px; background:var(--surface-2); border-radius:99px; overflow:hidden}
 .track .fill{height:100%; background:var(--accent); border-radius:99px; transition:width .28s ease}
-.qhead{margin:0 0 4px}
-.qsub{color:var(--text-secondary); font-size:.95rem; margin:10px 0 22px}
-.blockctx{font-size:.8rem; font-weight:620; letter-spacing:.09em; text-transform:uppercase; color:var(--text-muted); margin-bottom:10px}
+.blockctx{font-size:.78rem; font-weight:620; letter-spacing:.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:12px}
+.scene{
+  border:1px solid var(--border); border-left:3px solid var(--accent);
+  background:var(--surface-2); border-radius:0 12px 12px 0;
+  padding:18px 22px; margin:0 0 24px;
+}
+.scenetitle{font-size:clamp(1.4rem,3.8vw,1.85rem); font-weight:660; letter-spacing:-.02em; margin:0}
+.scenesub{margin:7px 0 0; font-size:.93rem; color:var(--text-secondary); line-height:1.5}
+.taskq{font-size:clamp(1.04rem,2.4vw,1.15rem); font-weight:660; letter-spacing:-.01em; margin:0 0 5px}
+.qsub{color:var(--text-secondary); font-size:.93rem; margin:0 0 18px}
 .stmts{display:flex; flex-direction:column; gap:10px}
 .stmt{
   display:flex; align-items:center; gap:14px; justify-content:space-between; width:100%;
@@ -223,7 +230,7 @@ footer a{color:var(--text-muted)}
 
     <h3 style="margin-bottom:2px">So läuft der Test ab</h3>
     <div class="howto">
-      <div class="howto-step"><span class="n">1</span><div>Du siehst vier Aussagen und klickst die an, die <strong>am meisten</strong> auf dich zutrifft.</div></div>
+      <div class="howto-step"><span class="n">1</span><div>Jede Runde spielt in einer <strong>bestimmten Situation</strong> — etwa „Wenn es Streit gibt“. Dazu siehst du vier Aussagen und klickst die an, die <strong>am meisten</strong> auf dich zutrifft.</div></div>
       <div class="howto-step"><span class="n">2</span><div>Danach siehst du dieselben vier noch einmal und klickst die an, die <strong>am wenigsten</strong> passt.</div></div>
       <div class="howto-step"><span class="n">3</span><div>Das Ganze sieben Mal. <strong>Ein Klick pro Schritt</strong> — es geht von selbst weiter, du musst nichts bestätigen.</div></div>
     </div>
@@ -258,7 +265,11 @@ footer a{color:var(--text-muted)}
     <div class="track"><div class="fill" id="progFill" style="width:0%"></div></div>
   </div>
   <div class="blockctx" id="blockCtx">—</div>
-  <h2 class="qhead" id="qTitle">—</h2>
+  <div class="scene">
+    <h2 class="scenetitle" id="sceneTitle">—</h2>
+    <p class="scenesub" id="sceneSub">—</p>
+  </div>
+  <h3 class="taskq" id="qTitle">—</h3>
   <p class="qsub" id="qSub">—</p>
   <div class="stmts" id="stmts" role="group" aria-live="polite"></div>
   <div class="navrow">
@@ -395,37 +406,37 @@ const MIX = {
 };
 
 const BLOCKS = [
-  {title:"Im Alltag und bei der Arbeit", items:[
+  {title:"Im ganz normalen Alltag", ctx:"Kein besonderer Druck, kein Ausnahmezustand — ein gewöhnlicher Tag.", items:[
     {t:"S", s:"Ich bin der Ruhepol, wenn es um mich herum hektisch wird."},
     {t:"D", s:"Ich treffe Entscheidungen schnell und stehe dann dazu."},
     {t:"G", s:"Ich prüfe lieber zweimal, bevor ich etwas aus der Hand gebe."},
     {t:"I", s:"Ich stecke andere leicht mit meiner Begeisterung an."}]},
-  {title:"Wenn der Druck steigt", items:[
+  {title:"Wenn der Druck steigt", ctx:"Zu wenig Zeit, zu viel gleichzeitig, und es wird langsam eng.", items:[
     {t:"I", s:"Ich rede mehr und suche den Kontakt zu anderen."},
     {t:"G", s:"Ich gehe die Fakten durch, bis ich wieder Klarheit habe."},
     {t:"D", s:"Ich werde direkter und übernehme das Steuer."},
     {t:"S", s:"Ich ziehe mich zurück und mache still weiter."}]},
-  {title:"Wenn es Streit gibt", items:[
+  {title:"Wenn es Streit gibt", ctx:"Eine echte Meinungsverschiedenheit — nicht nur ein Missverständnis.", items:[
     {t:"G", s:"Ich belege meinen Standpunkt mit Argumenten."},
     {t:"S", s:"Ich gehe auf den anderen zu und suche einen Ausgleich."},
     {t:"I", s:"Ich versuche, die Stimmung wieder aufzulockern."},
     {t:"D", s:"Ich spreche das Problem sofort offen an."}]},
-  {title:"Bei etwas Neuem", items:[
+  {title:"Wenn etwas Neues ansteht", ctx:"Ein Projekt, eine Veränderung, etwas das du noch nicht kennst.", items:[
     {t:"D", s:"Mich interessiert vor allem: Was ist das Ziel?"},
     {t:"S", s:"Ich will wissen, wie sich das auf meinen Alltag auswirkt."},
     {t:"G", s:"Ich will den Plan im Detail verstehen, bevor ich mitgehe."},
     {t:"I", s:"Mich reizt die Idee — und wer alles dabei ist."}]},
-  {title:"So beschreiben mich andere", items:[
+  {title:"Wenn andere dich beschreiben", ctx:"Was Menschen über dich sagen würden, die dich länger kennen.", items:[
     {t:"I", s:"Offen und mitreißend."},
     {t:"D", s:"Fordernd und zielstrebig."},
     {t:"G", s:"Sachlich und genau."},
     {t:"S", s:"Geduldig und verlässlich."}]},
-  {title:"Wie ich entscheide", items:[
+  {title:"Wenn eine Entscheidung ansteht", ctx:"Etwas mit Folgen, bei dem du dich festlegen musst.", items:[
     {t:"G", s:"Ich entscheide erst, wenn die Faktenlage stimmt."},
     {t:"I", s:"Ich entscheide danach, was sich stimmig anfühlt."},
     {t:"D", s:"Ich entscheide aus dem Bauch und korrigiere unterwegs."},
     {t:"S", s:"Ich entscheide erst, wenn alle Beteiligten mitgehen können."}]},
-  {title:"Was mich wirklich stört", items:[
+  {title:"Was dich wirklich auf die Palme bringt", ctx:"Nicht die kleine Macke — das, was dich echt fertigmacht.", items:[
     {t:"S", s:"Wenn ständig alles wieder umgeworfen wird."},
     {t:"G", s:"Wenn schlampig gearbeitet wird."},
     {t:"D", s:"Wenn lange geredet und wenig entschieden wird."},
@@ -463,13 +474,15 @@ function renderBlock(){
   $("progLabel").textContent = "Schritt " + (done + 1) + " von " + STEPS;
   $("progPct").textContent = Math.round(done / STEPS * 100) + " %";
   $("progFill").style.width = Math.round(done / STEPS * 100) + "%";
-  $("blockCtx").textContent = "Runde " + (idx + 1) + " von " + BLOCKS.length + " · " + b.title;
+  $("blockCtx").textContent = "Runde " + (idx + 1) + " von " + BLOCKS.length;
+  $("sceneTitle").textContent = b.title;
+  $("sceneSub").textContent = b.ctx;
 
   if (step === 0){
-    $("qTitle").textContent = "Was trifft am meisten auf dich zu?";
+    $("qTitle").textContent = "Was trifft hier am meisten auf dich zu?";
     $("qSub").innerHTML = "Klick <strong>eine</strong> der vier Aussagen an. Antworte spontan, so wie du wirklich bist — nicht wie du gern wärst.";
   } else {
-    $("qTitle").textContent = "Und was trifft am wenigsten zu?";
+    $("qTitle").textContent = "Und was trifft hier am wenigsten zu?";
     $("qSub").innerHTML = "Jetzt das Gegenteil: Klick von den übrigen drei die Aussage an, die <strong>am wenigsten</strong> zu dir passt.";
   }
 
