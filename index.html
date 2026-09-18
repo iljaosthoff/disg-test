@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DISG-Test</title>
+<meta name="description" content="Kostenloser DISG-Test mit 28 Aussagen: Finde in fünf Minuten heraus, welcher Verhaltensstil dich prägt — mit ausführlicher Auswertung. Ohne Anmeldung, ohne Datenspeicherung.">
+<meta property="og:title" content="DISG-Test — welcher Verhaltensstil prägt dich?">
+<meta property="og:description" content="28 Aussagen, fünf Minuten, sofortige Auswertung. Ohne Anmeldung, ohne Datenspeicherung.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='16' height='16' fill='%23e34948'/%3E%3Crect x='16' width='16' height='16' fill='%23eda100'/%3E%3Crect y='16' width='16' height='16' fill='%231baf7a'/%3E%3Crect x='16' y='16' width='16' height='16' fill='%232a78d6'/%3E%3C/svg%3E">
+<style>
+:root{
+  color-scheme: light;
+  --surface-0:#f7f7f5; --surface-1:#fcfcfb; --surface-2:#f0efec;
+  --border:#e3e2dd; --border-strong:#cfcec8;
+  --text-primary:#0b0b0b; --text-secondary:#52514e; --text-muted:#83827c;
+  --accent:#1f1f1e; --accent-ink:#fcfcfb; --accent-soft:#e3e2dd;
+  --d:#e34948; --i:#eda100; --s:#1baf7a; --g:#2a78d6;
+  --shadow:0 1px 2px rgba(11,11,11,.05), 0 8px 24px -12px rgba(11,11,11,.14);
+  --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --surface-0:#131312; --surface-1:#1a1a19; --surface-2:#232321;
+    --border:#333331; --border-strong:#45453f;
+    --text-primary:#ffffff; --text-secondary:#c3c2b7; --text-muted:#8f8e86;
+    --accent:#f2f1ec; --accent-ink:#131312; --accent-soft:#333331;
+    --d:#e34948; --i:#c98500; --s:#199e70; --g:#3987e5;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --surface-0:#131312; --surface-1:#1a1a19; --surface-2:#232321;
+  --border:#333331; --border-strong:#45453f;
+  --text-primary:#ffffff; --text-secondary:#c3c2b7; --text-muted:#8f8e86;
+  --accent:#f2f1ec; --accent-ink:#131312; --accent-soft:#333331;
+  --d:#e34948; --i:#c98500; --s:#199e70; --g:#3987e5;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--surface-0); color:var(--text-primary);
+  font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:760px; margin:0 auto; padding:0 16px 96px}
+h1,h2,h3{line-height:1.2; letter-spacing:-.02em; margin:0}
+h1{font-size:clamp(1.9rem,5vw,2.7rem); font-weight:680}
+h2{font-size:clamp(1.3rem,3.4vw,1.65rem); font-weight:640}
+h3{font-size:1.02rem; font-weight:640; letter-spacing:-.01em}
+p{margin:0 0 1em}
+a{color:var(--text-primary); text-underline-offset:3px; text-decoration-color:var(--border-strong)}
+a:hover{text-decoration-color:currentColor}
+
+/* ---------- Topbar ---------- */
+.topbar{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:18px 0 6px}
+.brand{display:flex; align-items:center; gap:9px; font-size:.82rem; font-weight:620; letter-spacing:.06em; text-transform:uppercase; color:var(--text-muted)}
+.brandmark{display:grid; grid-template-columns:7px 7px; grid-template-rows:7px 7px; gap:1.5px; flex:none}
+.brandmark i{display:block; border-radius:1.5px}
+.brandmark i:nth-child(1){background:var(--d)} .brandmark i:nth-child(2){background:var(--i)}
+.brandmark i:nth-child(3){background:var(--s)} .brandmark i:nth-child(4){background:var(--g)}
+.iconbtn{
+  border:1px solid var(--border); background:var(--surface-1); color:var(--text-secondary);
+  border-radius:9px; width:36px; height:36px; display:grid; place-items:center; cursor:pointer; padding:0;
+}
+.iconbtn:hover{border-color:var(--border-strong); color:var(--text-primary)}
+.iconbtn svg{width:17px; height:17px}
+.ico-sun{display:none} .ico-moon{display:block}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .ico-sun{display:block}
+  :root:not([data-theme="light"]) .ico-moon{display:none}
+}
+:root[data-theme="dark"] .ico-sun{display:block}
+:root[data-theme="dark"] .ico-moon{display:none}
+:root[data-theme="light"] .ico-sun{display:none}
+:root[data-theme="light"] .ico-moon{display:block}
+
+/* ---------- Cards & buttons ---------- */
+.card{background:var(--surface-1); border:1px solid var(--border); border-radius:var(--radius); padding:clamp(20px,3.5vw,30px); box-shadow:var(--shadow)}
+.btn{
+  font:inherit; font-weight:600; font-size:1rem; border-radius:11px; padding:13px 24px; cursor:pointer;
+  border:1px solid var(--accent); background:var(--accent); color:var(--accent-ink); transition:opacity .12s, transform .06s;
+}
+.btn:hover{opacity:.87} .btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.34; cursor:not-allowed; transform:none}
+.btn-ghost{background:transparent; color:var(--text-secondary); border-color:var(--border)}
+.btn-ghost:hover{color:var(--text-primary); border-color:var(--border-strong); opacity:1}
+.btn-sm{padding:9px 15px; font-size:.9rem; border-radius:9px}
+.muted{color:var(--text-muted)}
+.small{font-size:.9rem; line-height:1.55}
+.tiny{font-size:.82rem; line-height:1.5}
+.screen[hidden]{display:none}
+
+/* ---------- Intro ---------- */
+.hero{padding:clamp(28px,6vw,54px) 0 6px}
+.eyebrow{font-size:.8rem; font-weight:620; letter-spacing:.09em; text-transform:uppercase; color:var(--text-muted); margin-bottom:14px}
+.lede{font-size:clamp(1.02rem,2.3vw,1.16rem); color:var(--text-secondary); max-width:56ch; margin:18px 0 0}
+.facts{display:flex; flex-wrap:wrap; gap:8px; margin:26px 0 30px}
+.fact{border:1px solid var(--border); background:var(--surface-1); border-radius:999px; padding:6px 14px; font-size:.86rem; color:var(--text-secondary)}
+.typegrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(168px,1fr)); gap:10px; margin:22px 0 0}
+.typecard{border:1px solid var(--border); border-radius:12px; padding:15px 16px; background:var(--surface-1)}
+.typecard .k{display:flex; align-items:center; gap:9px; margin-bottom:6px}
+.dot{width:11px; height:11px; border-radius:3px; flex:none}
+.typecard .n{font-weight:640; font-size:.98rem}
+.typecard .t{font-size:.87rem; color:var(--text-secondary); line-height:1.5}
+
+/* ---------- Quiz ---------- */
+.progress{margin:26px 0 20px}
+.progress .meta{display:flex; justify-content:space-between; font-size:.85rem; color:var(--text-muted); margin-bottom:9px; font-variant-numeric:tabular-nums}
+.track{height:5px; background:var(--surface-2); border-radius:99px; overflow:hidden}
+.track .fill{height:100%; background:var(--accent); border-radius:99px; transition:width .28s ease}
+.qhead{margin:0 0 4px}
+.qsub{color:var(--text-secondary); font-size:.95rem; margin:10px 0 22px}
+.stmts{display:flex; flex-direction:column; gap:10px}
+.stmt{
+  display:flex; align-items:center; gap:14px; justify-content:space-between; flex-wrap:wrap;
+  border:1px solid var(--border); border-radius:12px; padding:14px 15px; background:var(--surface-1); transition:border-color .12s, background .12s;
+}
+.stmt .txt{flex:1 1 230px; font-size:1rem; line-height:1.45}
+.picks{display:flex; gap:7px; flex:none}
+.pick{
+  font:inherit; font-size:.82rem; font-weight:600; cursor:pointer; white-space:nowrap;
+  border:1px solid var(--border-strong); background:var(--surface-1); color:var(--text-secondary);
+  border-radius:8px; padding:7px 12px; transition:all .12s;
+}
+.pick:hover{color:var(--text-primary); border-color:var(--text-muted)}
+.pick[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+.stmt.is-most{border-color:var(--text-muted); background:var(--surface-2)}
+.stmt.is-least{opacity:.62}
+.navrow{display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:26px}
+
+/* ---------- Result ---------- */
+.headline{display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap}
+.bigletter{
+  width:62px; height:62px; flex:none; border-radius:14px; display:grid; place-items:center;
+  font-size:1.9rem; font-weight:700; color:#fff; letter-spacing:-.02em;
+}
+.chart{margin:8px 0 4px}
+.barrow{display:grid; grid-template-columns:minmax(96px,auto) 1fr; gap:14px; align-items:center; padding:9px 0}
+.barlabel{display:flex; align-items:center; gap:8px; font-size:.93rem; font-weight:600}
+.barplot{display:grid; grid-template-columns:1fr 34px; gap:10px; align-items:center}
+.bartrack{position:relative; height:26px; background:var(--surface-2); border-radius:5px; overflow:hidden}
+.barfill{position:absolute; left:0; top:0; bottom:0; border-radius:0 4px 4px 0; width:0; transition:width .7s cubic-bezier(.22,1,.36,1)}
+.neutral{position:absolute; left:50%; top:0; bottom:0; width:0; border-left:1px dashed var(--border-strong)}
+.barval{text-align:right; font-size:.88rem; font-weight:640; font-variant-numeric:tabular-nums; color:var(--text-secondary)}
+.axisnote{display:flex; justify-content:space-between; font-size:.78rem; color:var(--text-muted); margin-top:6px; padding-left:110px; padding-right:44px}
+@media (max-width:520px){ .barrow{grid-template-columns:1fr; gap:5px} .axisnote{padding-left:0} }
+.tbl{width:100%; border-collapse:collapse; font-size:.9rem; margin-top:6px}
+.tbl th,.tbl td{text-align:left; padding:8px 10px; border-bottom:1px solid var(--border)}
+.tbl th{font-weight:620; color:var(--text-secondary); font-size:.83rem; text-transform:uppercase; letter-spacing:.05em}
+.tbl td:not(:first-child), .tbl th:not(:first-child){text-align:right; font-variant-numeric:tabular-nums}
+details.tblwrap{margin-top:16px}
+details.tblwrap summary{cursor:pointer; font-size:.88rem; color:var(--text-secondary); padding:6px 0}
+.section{margin-top:26px}
+.section h3{margin-bottom:9px}
+ul.clean{margin:0 0 0 0; padding-left:1.15em}
+ul.clean li{margin-bottom:6px}
+.split{display:grid; grid-template-columns:1fr 1fr; gap:22px}
+@media (max-width:620px){ .split{grid-template-columns:1fr; gap:20px} }
+.callout{border:1px solid var(--border); border-left:3px solid var(--accent); background:var(--surface-2); border-radius:0 11px 11px 0; padding:15px 17px; font-size:.93rem; line-height:1.55}
+.stack{display:flex; flex-direction:column; gap:18px}
+.spacer{height:22px}
+hr.rule{border:0; border-top:1px solid var(--border); margin:30px 0}
+.actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:8px}
+footer{margin-top:48px; padding-top:22px; border-top:1px solid var(--border); font-size:.85rem; color:var(--text-muted); line-height:1.6}
+footer a{color:var(--text-muted)}
+.toast{
+  position:fixed; left:50%; bottom:26px; transform:translate(-50%,14px); opacity:0; pointer-events:none;
+  background:var(--accent); color:var(--accent-ink); padding:10px 18px; border-radius:10px; font-size:.9rem; font-weight:600;
+  transition:opacity .2s, transform .2s; z-index:50;
+}
+.toast.show{opacity:1; transform:translate(-50%,0)}
+@media print{
+  .topbar,.actions,.navrow,.toast{display:none!important}
+  body{background:#fff; font-size:12pt}
+  .card{box-shadow:none; border-color:#ccc; break-inside:avoid}
+  .barfill{print-color-adjust:exact; -webkit-print-color-adjust:exact}
+}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important; animation:none!important} }
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="topbar">
+  <div class="brand"><span class="brandmark"><i></i><i></i><i></i><i></i></span> DISG-Test</div>
+  <button class="iconbtn" id="themeBtn" title="Hell / Dunkel umschalten" aria-label="Hell oder dunkel umschalten">
+    <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+  </button>
+</div>
+
+<!-- ============ INTRO ============ -->
+<section class="screen" id="screen-intro">
+  <div class="hero">
+    <div class="eyebrow">28 Aussagen · ca. 5 Minuten</div>
+    <h1>Welcher Verhaltensstil prägt dich?</h1>
+    <p class="lede">Das DISG-Modell beschreibt vier Grundmuster, wie Menschen handeln, entscheiden und kommunizieren. Beantworte 28 Aussagen und du bekommst dein Profil — mit Stärken, Stressmustern und konkreten Hinweisen, wie andere dich am besten erreichen.</p>
+    <div class="facts">
+      <span class="fact">Keine Anmeldung</span>
+      <span class="fact">Keine E-Mail nötig</span>
+      <span class="fact">Nichts wird gespeichert</span>
+      <span class="fact">Ergebnis sofort</span>
+    </div>
+    <button class="btn" id="startBtn">Test starten</button>
+  </div>
+
+  <div class="typegrid">
+    <div class="typecard"><div class="k"><span class="dot" style="background:var(--d)"></span><span class="n">D — Dominant</span></div><div class="t">Direkt, entscheidungsfreudig, zielorientiert. Geht auf das Ergebnis zu.</div></div>
+    <div class="typecard"><div class="k"><span class="dot" style="background:var(--i)"></span><span class="n">I — Initiativ</span></div><div class="t">Offen, begeisternd, kontaktstark. Gewinnt Menschen über Energie.</div></div>
+    <div class="typecard"><div class="k"><span class="dot" style="background:var(--s)"></span><span class="n">S — Stetig</span></div><div class="t">Ruhig, verlässlich, geduldig. Hält zusammen, was auseinanderläuft.</div></div>
+    <div class="typecard"><div class="k"><span class="dot" style="background:var(--g)"></span><span class="n">G — Gewissenhaft</span></div><div class="t">Analytisch, gründlich, präzise. Will es richtig machen, nicht nur schnell.</div></div>
+  </div>
+
+  <div class="spacer"></div>
+  <div class="card">
+    <h2>Woher das Modell kommt</h2>
+    <p class="small" style="margin-top:12px">Der Psychologe William Moulton Marston beschrieb 1928 vier Verhaltensmuster, die sich aus zwei Fragen ergeben: <strong>Wie nehme ich meine Umgebung wahr</strong> — eher als günstig oder als herausfordernd? Und <strong>wie stark erlebe ich mich selbst als handlungsfähig</strong>? Daraus entstanden die vier Stile D, I, S und G.</p>
+    <p class="small">Heute werden sie meist über zwei Achsen dargestellt:</p>
+    <ul class="clean small">
+      <li><strong>Extravertiert ↔ introvertiert:</strong> D und I gehen nach außen, S und G wirken nach innen.</li>
+      <li><strong>Sachorientiert ↔ menschenorientiert:</strong> D und G schauen auf die Aufgabe, I und S auf die Beziehung.</li>
+    </ul>
+    <p class="small" style="margin-top:14px">Fast niemand ist ein reiner Typ. Die meisten Menschen haben eine Hauptausprägung und eine zweite, die dazukommt — genau das zeigt dir die Auswertung.</p>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="screen" id="screen-quiz" hidden>
+  <div class="progress">
+    <div class="meta"><span id="progLabel">Block 1 von 7</span><span id="progPct">0 %</span></div>
+    <div class="track"><div class="fill" id="progFill" style="width:0%"></div></div>
+  </div>
+  <h2 class="qhead" id="qTitle">—</h2>
+  <p class="qsub">Wähle die Aussage, die <strong>am meisten</strong> auf dich zutrifft — und die, die <strong>am wenigsten</strong> passt. Antworte spontan, so wie du wirklich bist, nicht wie du gern wärst.</p>
+  <div class="stmts" id="stmts"></div>
+  <div class="navrow">
+    <button class="btn btn-ghost btn-sm" id="backBtn">Zurück</button>
+    <button class="btn" id="nextBtn" disabled>Weiter</button>
+  </div>
+</section>
+
+<!-- ============ RESULT ============ -->
+<section class="screen" id="screen-result" hidden>
+  <div class="card">
+    <div class="headline">
+      <div class="bigletter" id="resLetter">D</div>
+      <div style="flex:1 1 260px">
+        <div class="eyebrow" style="margin-bottom:6px">Dein Profil</div>
+        <h1 id="resTitle" style="font-size:clamp(1.5rem,4vw,2.1rem)">—</h1>
+        <p class="small" id="resTagline" style="color:var(--text-secondary); margin:8px 0 0"></p>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+    <div class="chart" id="chart"></div>
+    <div class="axisnote"><span>niedrig</span><span>neutral</span><span>hoch</span></div>
+    <p class="tiny muted" style="margin-top:14px">Jeder Stil wird einzeln gemessen — die vier Werte ergeben zusammen nicht 100. 50 bedeutet neutral, darüber ist der Stil bei dir ausgeprägt, darunter eher schwach.</p>
+
+    <details class="tblwrap">
+      <summary>Werte als Tabelle anzeigen</summary>
+      <table class="tbl" id="resTable">
+        <thead><tr><th>Stil</th><th>Ausprägung</th><th>„am meisten“</th><th>„am wenigsten“</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </details>
+
+    <div class="actions">
+      <button class="btn btn-ghost btn-sm" id="copyBtn">Ergebnis kopieren</button>
+      <button class="btn btn-ghost btn-sm" id="linkBtn">Link zum Ergebnis</button>
+      <button class="btn btn-ghost btn-sm" id="printBtn">Drucken / als PDF</button>
+      <button class="btn btn-ghost btn-sm" id="againBtn">Nochmal machen</button>
+    </div>
+  </div>
+
+  <div class="spacer"></div>
+  <div class="card stack" id="resDetail"></div>
+
+  <div class="spacer"></div>
+  <div class="card" id="resMix"></div>
+
+  <div class="spacer"></div>
+  <div class="card">
+    <h2>Die anderen drei Stile</h2>
+    <p class="small" style="margin-top:10px; color:var(--text-secondary)">Damit du weißt, wie du dein Gegenüber erreichst — der häufigste praktische Nutzen des Modells.</p>
+    <div class="spacer"></div>
+    <div class="stack" id="resOthers"></div>
+  </div>
+
+  <div class="spacer"></div>
+  <div class="card">
+    <h2>Was dieser Test kann — und was nicht</h2>
+    <ul class="clean small" style="margin-top:12px">
+      <li><strong>Er misst Verhalten, keine Persönlichkeit.</strong> DISG beschreibt, wie du dich in einer bestimmten Situation zeigst. Im Job kann dein Profil anders aussehen als zu Hause.</li>
+      <li><strong>Er misst dein Selbstbild.</strong> Du antwortest über dich selbst. Wie andere dich erleben, kann abweichen — oft ist genau diese Differenz das Interessante.</li>
+      <li><strong>Er vergleicht dich mit dir selbst, nicht mit anderen.</strong> Weil du bei jedem Block wählen musst, was am meisten und am wenigsten passt, zeigen die Werte deine innere Rangfolge — keinen Vergleich mit der Bevölkerung.</li>
+      <li><strong>Er ist kein psychologisches Diagnoseinstrument.</strong> DISG ist wissenschaftlich deutlich schwächer belegt als etwa die Big Five. Für Selbstreflexion und Kommunikation ist es brauchbar; für Personalauswahl, Diagnose oder weitreichende Entscheidungen über Menschen ist es ungeeignet.</li>
+      <li><strong>Kein Stil ist besser.</strong> Es gibt keine guten und schlechten Ergebnisse, nur unterschiedliche Muster mit je eigenen Stärken und Kosten.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Hinweis:</strong> Dieser Test dient der Selbstreflexion und ersetzt keine psychologische, medizinische oder therapeutische Beratung.</p>
+  <p><strong>Datenschutz:</strong> Der Test läuft vollständig in deinem Browser. Es werden keine Antworten übertragen, keine Cookies gesetzt und keine Daten gespeichert oder ausgewertet.</p>
+  <p>Modellgrundlage: DISG / DISC nach William Moulton Marston (1928). Fragen und Auswertungstexte dieser Seite sind eine eigenständige Umsetzung und keine Lizenzprodukte.</p>
+  <p><!-- TODO ILJA: Impressum-Link auf deine bestehende Seite setzen (bei öffentlichen Webseiten in DE nach § 5 DDG Pflicht) -->
+  <a href="#" id="imprintLink">Impressum</a></p>
+</footer>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------------- Daten ---------------- */
+const TYPES = {
+  D:{name:"Dominant", color:"var(--d)", axis:"extravertiert · sachorientiert",
+     tagline:"Du gehst auf Ziele zu. Direkt, schnell, ohne Umweg.",
+     drive:"Ergebnisse, Tempo, Kontrolle über die eigene Richtung. Du willst wirken, nicht verwalten.",
+     strengths:["Entscheidest schnell und stehst dazu","Übernimmst Verantwortung, auch wenn es unbequem wird","Bleibst bei Widerstand handlungsfähig","Bringst festgefahrene Dinge wieder ins Rollen","Sprichst an, was andere lieber aussitzen"],
+     stress:["Wirst ungeduldig und übergehst andere","Hörst weniger zu, entscheidest zu früh","Der Ton wird schärfer, als du merkst","Machst Tempo zum Selbstzweck"],
+     blind:"Du unterschätzt, wie viel Tempo andere aushalten — und hältst Widerspruch für eine Bremse, statt für Information. Oft steckt in dem Einwand, der dich nervt, genau der Fehler, den du sonst teuer bezahlst.",
+     talk:["Ergebnis zuerst, Begründung danach","Kurz halten — keine langen Vorreden","Optionen anbieten statt Vorgaben machen","Nicht ausweichen: Klartext wird respektiert","Zeitrahmen und Zuständigkeit klar benennen"],
+     irritant:"Endlose Diskussionen, in denen nichts entschieden wird."},
+  I:{name:"Initiativ", color:"var(--i)", axis:"extravertiert · menschenorientiert",
+     tagline:"Du gewinnst Menschen. Über Energie, Sprache und Kontakt.",
+     drive:"Anerkennung, Kontakt und Wirkung. Du willst gesehen werden und andere mitnehmen.",
+     strengths:["Steckst andere mit Begeisterung an","Baust in Minuten Beziehungen auf","Denkst in Möglichkeiten statt in Hindernissen","Bringst Energie in eine müde Gruppe","Überzeugst, wo Argumente allein nicht reichen"],
+     stress:["Redest mehr, als die Lage braucht","Versprichst zu viel und zu schnell","Verlierst Details und Fristen aus dem Blick","Weichst Konflikten mit Charme aus"],
+     blind:"Du verwechselst gute Stimmung mit Klärung. Ein Gespräch, das sich gut angefühlt hat, ist noch kein Ergebnis — und die Vereinbarung, die niemand aufgeschrieben hat, existiert am Montag nicht mehr.",
+     talk:["Blickkontakt, Raum zum Reden, echte Anerkennung","In Bildern und Beispielen sprechen, nicht in Tabellen","Begeisterung ernst nehmen, nicht bremsen","Danach schriftlich festhalten, was vereinbart wurde","Bei Kritik: erst die Person würdigen, dann die Sache"],
+     irritant:"Nüchternheit ohne Funken — und übersehen zu werden."},
+  S:{name:"Stetig", color:"var(--s)", axis:"introvertiert · menschenorientiert",
+     tagline:"Du hältst zusammen, was sonst auseinanderläuft.",
+     drive:"Sicherheit, verlässliche Beziehungen und ein Rahmen, auf den man sich verlassen kann.",
+     strengths:["Hörst wirklich zu, nicht nur bis du dran bist","Bleibst ruhig, wenn es eng wird","Hältst Zusagen, auch die kleinen","Denkst an die Gruppe, nicht nur an dich","Arbeitest beharrlich weiter, wenn andere schon aufgegeben haben"],
+     stress:["Ziehst dich zurück statt zu widersprechen","Sagst nicht, was du brauchst","Trägst Unmut still mit, bis er zu groß wird","Bremst Veränderung leise statt offen"],
+     blind:"Du hältst Harmonie für Frieden. Aber ein Konflikt, den du zu spät ansprichst, wird nicht kleiner — er wird größer und persönlicher. Dein „ist schon okay“ ist oft teurer als ein kurzer, klarer Satz gewesen wäre.",
+     talk:["Zeit lassen, keinen Druck aufbauen","Veränderungen früh ankündigen und begründen","Ausdrücklich nach der Meinung fragen — sie kommt sonst nicht","Verlässlichkeit zeigen: gesagt ist getan","Keine Überrumpelung, keine Entscheidung „jetzt sofort“"],
+     irritant:"Plötzliche Kursänderungen, Druck und Ellenbogen."},
+  G:{name:"Gewissenhaft", color:"var(--g)", axis:"introvertiert · sachorientiert",
+     tagline:"Du willst es richtig machen, nicht nur schnell.",
+     drive:"Qualität, Korrektheit und Klarheit. Sicherheit entsteht bei dir durch Wissen, nicht durch Zuspruch.",
+     strengths:["Arbeitest gründlich und nachvollziehbar","Erkennst Fehler, bevor sie Schaden anrichten","Argumentierst sauber statt laut","Bleibst unabhängig von Stimmungen","Bist verlässlich in der Sache, ohne dich in den Vordergrund zu spielen"],
+     stress:["Ziehst dich in Details zurück","Schiebst Entscheidungen auf, bis „genug“ Daten da sind","Wirst kritisch und distanziert","Verwechselst Vorsicht mit Stillstand"],
+     blind:"Du hältst Vollständigkeit für die Voraussetzung. Aber manche Entscheidung ist heute zu 80 % richtig mehr wert als in drei Wochen zu 100 % — und dein Schweigen wirkt auf andere oft wie Ablehnung, obwohl du nur noch prüfst.",
+     talk:["Daten, Struktur, Belege — keine Superlative","Zeit zum Prüfen geben, nicht drängen","Fragen vorher schriftlich schicken","Kritik an der Sache, nie an der Person","Klar sagen, was sicher ist und was Annahme"],
+     irritant:"Schlamperei und Behauptungen ohne Beleg."}
+};
+
+const MIX = {
+  "DI":{t:"Der Antreiber", d:"Tempo trifft Überzeugungskraft. Du bringst Dinge in Bewegung und nimmst Menschen dabei mit. Deine Kombination ist stark im Aufbruch — beim Anfangen, Gewinnen, Öffnen. Die Schwachstelle liegt hinten: im Nachhalten, im Detail, im langweiligen Teil. Sorge früh dafür, dass jemand die Umsetzung sichert, sonst lässt du eine Spur angefangener Dinge hinter dir."},
+  "ID":{t:"Der Antreiber", d:"Überzeugungskraft trifft Tempo. Du gewinnst Menschen und setzt sie in Bewegung. Deine Kombination ist stark im Aufbruch und in der Außenwirkung. Die Schwachstelle liegt im Nachhalten und im Detail — sorge früh dafür, dass jemand die Umsetzung sichert."},
+  "DG":{t:"Der Stratege", d:"Entschlusskraft trifft Gründlichkeit — eine seltene und sehr wirksame Kombination. Du entscheidest schnell, aber nicht leichtfertig. Die Kosten: Beide Anteile sind sachorientiert, der Mensch kommt in deiner Rechnung oft zuletzt vor. Andere erleben dich leicht als kühl, auch wenn du es nicht so meinst."},
+  "GD":{t:"Der Stratege", d:"Gründlichkeit trifft Entschlusskraft. Du prüfst genau und ziehst dann durch. Die Kosten: Beide Anteile sind sachorientiert — der Mensch kommt in deiner Rechnung oft zuletzt vor, und andere erleben dich leicht als kühl."},
+  "IS":{t:"Der Verbinder", d:"Wärme trifft Verlässlichkeit. Menschen öffnen sich dir schnell und bleiben. Du bist der Kitt in Teams und Beziehungen. Der Preis: Du gehst Konflikten aus dem Weg, und Klartext fällt dir schwer — besonders wenn du jemanden enttäuschen müsstest. Genau das brauchst du am dringendsten zu üben."},
+  "SI":{t:"Der Verbinder", d:"Verlässlichkeit trifft Wärme. Du bist der Kitt in Teams und Beziehungen, Menschen vertrauen dir schnell. Der Preis: Konflikte schiebst du, und Klartext fällt dir schwer — besonders wenn du jemanden enttäuschen müsstest."},
+  "SG":{t:"Der Koordinator", d:"Ruhe trifft Präzision. Du hältst Systeme am Laufen, an die niemand denkt, solange sie funktionieren. Verlässlich, gründlich, ohne Lärm. Die Schwachstelle: Beide Anteile sind zurückhaltend. Du meldest dich zu selten — deine Arbeit wird gesehen, du selbst oft nicht. Sichtbarkeit musst du bewusst herstellen."},
+  "GS":{t:"Der Koordinator", d:"Präzision trifft Ruhe. Du hältst Systeme am Laufen, an die niemand denkt, solange sie funktionieren. Die Schwachstelle: Beide Anteile sind zurückhaltend — du meldest dich zu selten, und Sichtbarkeit musst du bewusst herstellen."},
+  "DS":{t:"Spannungsfeld Tempo & Beständigkeit", d:"Eine ungewöhnliche Kombination: Du willst vorankommen und gleichzeitig Sicherheit halten. Nach außen wirkst du entschlossen, innen wägst du länger ab als andere ahnen. Das macht dich in der Umsetzung ausdauernd — und in Phasen, in denen du selbst nicht weißt, ob du drücken oder halten sollst, ziemlich müde. Gib dir die Erlaubnis, beides nacheinander zu tun statt gleichzeitig."},
+  "SD":{t:"Spannungsfeld Beständigkeit & Tempo", d:"Eine ungewöhnliche Kombination: Du hältst Sicherheit und willst gleichzeitig vorankommen. Das macht dich ausdauernd in der Umsetzung — und manchmal innerlich zerrissen. Gib dir die Erlaubnis, beides nacheinander zu tun statt gleichzeitig."},
+  "IG":{t:"Spannungsfeld Begeisterung & Genauigkeit", d:"Eine seltene Mischung: Du steckst andere an und willst es trotzdem korrekt haben. Das macht dich zu jemandem, der komplizierte Dinge verständlich erklären kann — eine echte Stärke. Der Haken: Dein innerer Prüfer bremst deinen inneren Überzeuger. Du startest begeistert und zerlegst die eigene Idee, bevor sie jemand anderes sieht."},
+  "GI":{t:"Spannungsfeld Genauigkeit & Begeisterung", d:"Eine seltene Mischung: Du prüfst gründlich und kannst trotzdem mitreißen. Daraus wird die Fähigkeit, Kompliziertes verständlich zu machen. Der Haken: Dein innerer Prüfer bremst deinen inneren Überzeuger — du zerlegst eigene Ideen, bevor andere sie sehen."}
+};
+
+const BLOCKS = [
+  {title:"Im Alltag und bei der Arbeit", items:[
+    {t:"S", s:"Ich bin der Ruhepol, wenn es um mich herum hektisch wird."},
+    {t:"D", s:"Ich treffe Entscheidungen schnell und stehe dann dazu."},
+    {t:"G", s:"Ich prüfe lieber zweimal, bevor ich etwas aus der Hand gebe."},
+    {t:"I", s:"Ich stecke andere leicht mit meiner Begeisterung an."}]},
+  {title:"Wenn der Druck steigt", items:[
+    {t:"I", s:"Ich rede mehr und suche den Kontakt zu anderen."},
+    {t:"G", s:"Ich gehe die Fakten durch, bis ich wieder Klarheit habe."},
+    {t:"D", s:"Ich werde direkter und übernehme das Steuer."},
+    {t:"S", s:"Ich ziehe mich zurück und mache still weiter."}]},
+  {title:"Wenn es Streit gibt", items:[
+    {t:"G", s:"Ich belege meinen Standpunkt mit Argumenten."},
+    {t:"S", s:"Ich gehe auf den anderen zu und suche einen Ausgleich."},
+    {t:"I", s:"Ich versuche, die Stimmung wieder aufzulockern."},
+    {t:"D", s:"Ich spreche das Problem sofort offen an."}]},
+  {title:"Bei etwas Neuem", items:[
+    {t:"D", s:"Mich interessiert vor allem: Was ist das Ziel?"},
+    {t:"S", s:"Ich will wissen, wie sich das auf meinen Alltag auswirkt."},
+    {t:"G", s:"Ich will den Plan im Detail verstehen, bevor ich mitgehe."},
+    {t:"I", s:"Mich reizt die Idee — und wer alles dabei ist."}]},
+  {title:"So beschreiben mich andere", items:[
+    {t:"I", s:"Offen und mitreißend."},
+    {t:"D", s:"Fordernd und zielstrebig."},
+    {t:"G", s:"Sachlich und genau."},
+    {t:"S", s:"Geduldig und verlässlich."}]},
+  {title:"Wie ich entscheide", items:[
+    {t:"G", s:"Ich entscheide erst, wenn die Faktenlage stimmt."},
+    {t:"I", s:"Ich entscheide danach, was sich stimmig anfühlt."},
+    {t:"D", s:"Ich entscheide aus dem Bauch und korrigiere unterwegs."},
+    {t:"S", s:"Ich entscheide erst, wenn alle Beteiligten mitgehen können."}]},
+  {title:"Was mich wirklich stört", items:[
+    {t:"S", s:"Wenn ständig alles wieder umgeworfen wird."},
+    {t:"G", s:"Wenn schlampig gearbeitet wird."},
+    {t:"D", s:"Wenn lange geredet und wenig entschieden wird."},
+    {t:"I", s:"Wenn alles trocken und ohne Energie abläuft."}]}
+];
+
+const ORDER = ["D","I","S","G"];
+
+/* ---------------- State ---------------- */
+let idx = 0;
+const answers = BLOCKS.map(() => ({most:null, least:null}));
+
+const $ = id => document.getElementById(id);
+const screens = {intro:$("screen-intro"), quiz:$("screen-quiz"), result:$("screen-result")};
+
+function show(which){
+  Object.keys(screens).forEach(k => screens[k].hidden = (k !== which));
+  window.scrollTo(0, 0);
+}
+
+function toast(msg){
+  const t = $("toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove("show"), 1900);
+}
+
+/* ---------------- Quiz ---------------- */
+function renderBlock(){
+  const b = BLOCKS[idx], a = answers[idx];
+  $("qTitle").textContent = b.title;
+  $("progLabel").textContent = "Block " + (idx+1) + " von " + BLOCKS.length;
+  const done = answers.filter(x => x.most !== null && x.least !== null).length;
+  const pct = Math.round(done / BLOCKS.length * 100);
+  $("progPct").textContent = pct + " %";
+  $("progFill").style.width = pct + "%";
+  $("backBtn").style.visibility = idx === 0 ? "hidden" : "visible";
+  $("nextBtn").textContent = idx === BLOCKS.length - 1 ? "Auswertung anzeigen" : "Weiter";
+
+  const host = $("stmts"); host.innerHTML = "";
+  b.items.forEach((it, i) => {
+    const row = document.createElement("div");
+    row.className = "stmt" + (a.most === i ? " is-most" : "") + (a.least === i ? " is-least" : "");
+    const txt = document.createElement("div");
+    txt.className = "txt"; txt.textContent = it.s;
+    const picks = document.createElement("div");
+    picks.className = "picks";
+    [["most","Am meisten"],["least","Am wenigsten"]].forEach(([kind,label]) => {
+      const btn = document.createElement("button");
+      btn.className = "pick"; btn.type = "button"; btn.textContent = label;
+      btn.setAttribute("aria-pressed", a[kind] === i ? "true" : "false");
+      btn.setAttribute("aria-label", label + ": " + it.s);
+      btn.addEventListener("click", () => {
+        const other = kind === "most" ? "least" : "most";
+        a[kind] = (a[kind] === i) ? null : i;
+        if (a[kind] !== null && a[other] === i) a[other] = null;
+        renderBlock();
+      });
+      picks.appendChild(btn);
+    });
+    row.appendChild(txt); row.appendChild(picks); host.appendChild(row);
+  });
+  $("nextBtn").disabled = !(a.most !== null && a.least !== null);
+}
+
+$("startBtn").addEventListener("click", () => { show("quiz"); renderBlock(); });
+$("backBtn").addEventListener("click", () => { if (idx > 0){ idx--; renderBlock(); } });
+$("nextBtn").addEventListener("click", () => {
+  if (idx < BLOCKS.length - 1){ idx++; renderBlock(); }
+  else { const sc = score(); writeHash(sc); showResult(sc); }
+});
+
+/* ---------------- Auswertung ---------------- */
+function score(){
+  const raw = {D:0,I:0,S:0,G:0}, most = {D:0,I:0,S:0,G:0}, least = {D:0,I:0,S:0,G:0};
+  BLOCKS.forEach((b, i) => {
+    const a = answers[i];
+    if (a.most !== null){ const t = b.items[a.most].t; raw[t]++; most[t]++; }
+    if (a.least !== null){ const t = b.items[a.least].t; raw[t]--; least[t]++; }
+  });
+  return {raw, most, least};
+}
+
+// -7..+7  ->  0..100 (50 = neutral)
+const toIndex = r => Math.round((r + BLOCKS.length) / (BLOCKS.length * 2) * 100);
+
+function ranked(raw){
+  return ORDER.slice().sort((a,b) => (raw[b] - raw[a]) || (ORDER.indexOf(a) - ORDER.indexOf(b)));
+}
+
+function showResult(sc){
+  const {raw, most, least} = sc;
+  const rank = ranked(raw);
+  const primary = rank[0], secondary = rank[1];
+  const T = TYPES[primary];
+
+  $("resLetter").textContent = primary;
+  $("resLetter").style.background = T.color;
+  $("resTitle").textContent = primary + " — " + T.name;
+  $("resTagline").textContent = T.tagline + "  ·  " + T.axis;
+
+  // Balkendiagramm
+  const chart = $("chart"); chart.innerHTML = "";
+  ORDER.forEach(t => {
+    const v = toIndex(raw[t]);
+    const row = document.createElement("div"); row.className = "barrow";
+    const lab = document.createElement("div"); lab.className = "barlabel";
+    lab.innerHTML = '<span class="dot" style="background:var(--' + t.toLowerCase() + ')"></span><span>' + t + ' — ' + TYPES[t].name + '</span>';
+    const plot = document.createElement("div"); plot.className = "barplot";
+    const track = document.createElement("div"); track.className = "bartrack";
+    const fill = document.createElement("div"); fill.className = "barfill";
+    fill.style.background = "var(--" + t.toLowerCase() + ")";
+    const neutral = document.createElement("div"); neutral.className = "neutral";
+    const val = document.createElement("div"); val.className = "barval"; val.textContent = v;
+    track.appendChild(fill); track.appendChild(neutral);
+    plot.appendChild(track); plot.appendChild(val);
+    row.appendChild(lab); row.appendChild(plot); chart.appendChild(row);
+    requestAnimationFrame(() => { fill.style.width = v + "%"; });
+  });
+
+  // Tabelle
+  const tb = $("resTable").querySelector("tbody"); tb.innerHTML = "";
+  ORDER.forEach(t => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td>" + t + " — " + TYPES[t].name + "</td><td>" + toIndex(raw[t]) + "</td><td>" + most[t] + "</td><td>" + least[t] + "</td>";
+    tb.appendChild(tr);
+  });
+
+  // Hauptstil ausführlich
+  $("resDetail").innerHTML =
+    '<div><h2>Was dich antreibt</h2><p class="small" style="margin-top:10px">' + T.drive + '</p></div>' +
+    '<div class="split">' +
+      '<div class="section" style="margin-top:0"><h3>Deine Stärken</h3><ul class="clean small">' + T.strengths.map(x => "<li>" + x + "</li>").join("") + '</ul></div>' +
+      '<div class="section" style="margin-top:0"><h3>Unter Stress</h3><ul class="clean small">' + T.stress.map(x => "<li>" + x + "</li>").join("") + '</ul></div>' +
+    '</div>' +
+    '<div><h3>Dein blinder Fleck</h3><div class="callout" style="margin-top:9px">' + T.blind + '</div></div>' +
+    '<div><h3>Das bringt dich zuverlässig auf die Palme</h3><p class="small" style="margin-top:8px">' + T.irritant + '</p></div>' +
+    '<div><h3>So erreicht man dich am besten</h3><p class="tiny muted" style="margin:4px 0 9px">Gern weitergeben an Menschen, mit denen du oft zusammenarbeitest.</p><ul class="clean small">' + T.talk.map(x => "<li>" + x + "</li>").join("") + '</ul></div>';
+
+  // Mischtyp
+  const key = primary + secondary, m = MIX[key];
+  const secIdx = toIndex(raw[secondary]);
+  let mixHtml = '<h2>Deine Kombination: ' + primary + "/" + secondary + '</h2>';
+  if (secIdx <= 50){
+    mixHtml += '<p class="small" style="margin-top:12px; color:var(--text-secondary)">Dein Profil ist ungewöhnlich klar auf <strong>' + primary + ' — ' + TYPES[primary].name + '</strong> ausgerichtet; die anderen drei Stile liegen bei dir im neutralen bis niedrigen Bereich. Das bedeutet nicht, dass du sie nicht kannst — sondern dass sie dich weniger von selbst antreiben. Der zweitstärkste Stil ist ' + secondary + ' — ' + TYPES[secondary].name + '.</p>';
+  }
+  if (m){
+    mixHtml += '<p class="small" style="margin-top:12px"><strong>' + m.t + '.</strong> ' + m.d + '</p>';
+  }
+  mixHtml += '<p class="small" style="margin-top:14px; color:var(--text-secondary)">Der dritte und vierte Stil sind bei dir ' + rank[2] + ' und ' + rank[3] + '. Dort liegt erfahrungsgemäß der größte Reibungsverlust im Kontakt mit Menschen, die genau so ticken — schau dir diese beiden unten besonders an.</p>';
+  $("resMix").innerHTML = mixHtml;
+
+  // andere Stile
+  $("resOthers").innerHTML = rank.slice(1).map(t => {
+    const O = TYPES[t];
+    return '<div><h3 style="display:flex; align-items:center; gap:8px"><span class="dot" style="background:var(--' + t.toLowerCase() + ')"></span>' + t + ' — ' + O.name + '</h3>' +
+      '<p class="small" style="margin:8px 0 8px; color:var(--text-secondary)">' + O.tagline + '</p>' +
+      '<p class="small" style="margin:0 0 8px; color:var(--text-secondary)"><strong>Antrieb:</strong> ' + O.drive + '</p>' +
+      '<ul class="clean small">' + O.talk.map(x => "<li>" + x + "</li>").join("") + '</ul></div>';
+  }).join('<hr class="rule" style="margin:4px 0">');
+
+  show("result");
+}
+
+/* ---------------- Ergebnis teilen / Link ---------------- */
+function writeHash(sc){
+  const h = "#r=" + ORDER.map(t => sc.raw[t]).join(",");
+  try { history.replaceState(null, "", h); } catch(e){}
+}
+function readHash(){
+  const m = location.hash.match(/^#r=(-?\d+),(-?\d+),(-?\d+),(-?\d+)$/);
+  if (!m) return null;
+  const nums = m.slice(1,5).map(Number);
+  if (nums.some(n => !isFinite(n) || n < -BLOCKS.length || n > BLOCKS.length)) return null;
+  if (nums.reduce((a,b) => a+b, 0) !== 0) return null;
+  const raw = {}, most = {}, least = {};
+  ORDER.forEach((t,i) => { raw[t] = nums[i]; most[t] = Math.max(nums[i],0); least[t] = Math.max(-nums[i],0); });
+  return {raw, most, least};
+}
+
+$("copyBtn").addEventListener("click", () => {
+  const cur = readHash() || score();
+  const rank = ranked(cur.raw);
+  const txt = "Mein DISG-Profil: " + rank[0] + " — " + TYPES[rank[0]].name +
+    " (Zweitstil: " + rank[1] + " — " + TYPES[rank[1]].name + ")\n\n" +
+    ORDER.map(t => t + " — " + TYPES[t].name + ": " + toIndex(cur.raw[t])).join("\n") +
+    "\n\n" + TYPES[rank[0]].tagline + "\n\nGetestet auf: " + location.origin + location.pathname;
+  navigator.clipboard.writeText(txt).then(() => toast("Ergebnis kopiert"), () => toast("Kopieren nicht möglich"));
+});
+
+$("linkBtn").addEventListener("click", () => {
+  navigator.clipboard.writeText(location.href).then(() => toast("Link kopiert"), () => toast("Kopieren nicht möglich"));
+});
+$("printBtn").addEventListener("click", () => window.print());
+$("againBtn").addEventListener("click", () => {
+  idx = 0;
+  answers.forEach(a => { a.most = null; a.least = null; });
+  try { history.replaceState(null, "", location.pathname); } catch(e){}
+  show("quiz"); renderBlock();
+});
+
+/* ---------------- Theme ---------------- */
+const KEY = "disg-theme";
+try {
+  const saved = localStorage.getItem(KEY);
+  if (saved === "light" || saved === "dark") document.documentElement.setAttribute("data-theme", saved);
+} catch(e){}
+$("themeBtn").addEventListener("click", () => {
+  const cur = document.documentElement.getAttribute("data-theme");
+  const sysDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const next = cur ? (cur === "dark" ? "light" : "dark") : (sysDark ? "light" : "dark");
+  document.documentElement.setAttribute("data-theme", next);
+  try { localStorage.setItem(KEY, next); } catch(e){}
+});
+
+/* ---------------- Start ---------------- */
+const fromHash = readHash();
+if (fromHash) showResult(fromHash); else show("intro");
+
+})();
+</script>
+</body>
+</html>
